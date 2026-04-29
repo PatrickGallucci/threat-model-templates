@@ -5,221 +5,148 @@ https://www.microsoft.com/en-us/securityengineering/sdl/threatmodeling
 ![](https://i.imgur.com/M6o7wJT.png)
 
 ## Release Notes 
-**Release 8 (2026-04-29)**
-This version includes the following stencil additions:
+**Release 9 (2026-04-29)**
+## What this update adds
 
-**Frontier Model Platforms (LLM Providers)**
+The uploaded template already contained 30 Fabric threats from the previous round (TH245–TH274). Reviewing them against the user's Fabric skill files surfaced specific gaps that round did not address. This update adds **15 new threats (TH275–TH289)** focused on those gaps.
 
-- Claude (Anthropic) — Frontier AI assistant currently led by Claude Opus 4.7, known for long-horizon agentic work, coding, and powering tools like Cursor, Windsurf, and Claude Code.
-- ChatGPT (OpenAI) — The market-leading AI assistant powered by GPT-5.4, offering chat, reasoning, image generation (DALL-E), and the Assistants/Agents SDK.
-- Gemini (Google) — Google's flagship multimodal AI featuring Gemini 3.1 Pro with a 1M token context window and the tightest Google Workspace integration on the market.
-- Grok (xAI) — Elon Musk's AI assistant integrated into X, focused on real-time search, advanced reasoning ("Think" and "Big Brain" modes), and coding via Grok Studio.
-- DeepSeek — Open-source frontier model from China offering competitive performance at significantly lower cost, popular for self-hosted enterprise deployments.
-- Perplexity — Verification-first AI search platform with real-time citations, now wrapped in the Comet browser with multi-agent workflow capabilities.
+| | Before | After |
+|---|---|---|
+| Total ThreatTypes | 211 | 226 |
+| Total Fabric-stencil threats | 30 | 45 |
+| Manifest, ThreatMetaData, ThreatCategories, GenericElements, StandardElements | unchanged | byte-identical |
+| Existing 211 threats (TH1–TH274) | unchanged | byte-identical |
 
-**Enterprise / Cloud AI Platforms**
+## What gaps the previous round missed
 
-- AWS Bedrock — Amazon's managed service providing API access to multiple foundation models (Claude, Llama, Titan, etc.) with enterprise-grade governance.
-- Google Vertex AI — Google Cloud's end-to-end ML and generative AI platform for training, tuning, and deploying models including Gemini.
-- Databricks (Mosaic AI) — Data intelligence platform unifying data lakes, warehouses, and AI workloads with Lakehouse architecture for enterprise ML and GenAI.
-- IBM watsonx — IBM's enterprise AI and data platform focused on governance, foundation model customization, and regulated-industry deployments.
-- DataRobot — Enterprise AI lifecycle platform for predictive ML, generative AI, and MLOps with strong governance tooling.
+| Gap | New threat(s) |
+|---|---|
+| **No Spoofing threats for Fabric** (S=0 in the previous round) | TH275, TH276, TH277 |
+| Fabric Compute parent stencil had zero direct references | TH286, TH287, TH289 |
+| Fabric Data parent stencil had zero direct references | TH286, TH287, TH289 |
+| Fabric Boundary parent stencil had zero direct references | TH279, TH287, TH288 |
+| Power BI embed-token compromise (distinct from semantic-model RLS in TH262) | TH275 |
+| Data Agent SPN-vs-user-identity confusion (per skill: SPN not supported) | TH276 |
+| Scheduled-run identity vs interactive-edit identity divergence | TH277 |
+| OneLake Security 250/500/500 role limits forcing role widening | TH278 |
+| OneLake Security exclusivity with private link / Purview Data Share | TH279 |
+| Direct Lake silent fallback to DirectQuery (security context shift) | TH280 |
+| Mirroring source-system credential exposure | TH281 |
+| Spark library / JAR supply chain in Data Engineering | TH282 |
+| Activator outbound webhook as exfiltration channel | TH283 |
+| KQL ingestion silent column drop / type coercion on schema drift | TH284 |
+| Lakehouse Files area reachable via ABFS bypassing Tables review | TH285 |
+| Copilot / generative AI in Fabric crossing data boundary | TH286 |
+| Compute-vs-data identity attribution at the trust boundary | TH287 |
+| Contributor-role peer/self elevation through item-ownership grants | TH288 |
+| Domain endorsement / Promoted-Certified surface widening discoverability | TH289 |
 
+## STRIDE+A distribution
 
-**AI Agent & Orchestration Platforms**
+| Category | Round 1 (TH245–TH274) | Round 2 (TH275–TH289) | Combined |
+|---|---|---|---|
+| S — Spoofing | 0 | **3** | 3 |
+| T — Tampering | 5 | 2 | 7 |
+| R — Repudiation | 2 | 1 | 3 |
+| I — Information Disclosure | 17 | 8 | 25 |
+| D — Denial of Service | 2 | 0 | 2 |
+| E — Elevation of Privilege | 4 | 1 | 5 |
+| A — Abuse | 0 | 0 | 0 |
 
-- LangChain / LangGraph — Open-source framework for building stateful, multi-actor LLM applications and agent workflows with strong developer adoption.
-- CrewAI — Multi-agent orchestration framework for coordinating role-based AI agents to complete complex collaborative tasks.
-- AutoGen (Microsoft) — Microsoft Research's open-source framework for building conversational multi-agent systems.
-- n8n — Self-hostable workflow automation platform with a powerful AI Agent node, ideal for data-sovereignty-sensitive integrations.
-- Lindy — No-code AI agent platform for business automation, lead routing, and CRM workflows.
+The combined catalog now covers six of the seven categories. Spoofing — the previous gap — now has dedicated coverage. Abuse remains at zero for Fabric specifically because the relevant Abuse pattern (LLM misuse) is already covered generically in TH219/TH242 and there is no Fabric-specific abuse pattern distinct from that.
 
-**Developer & Coding Platforms**
+## Stencil coverage after this round
 
-- Cursor — AI-native code editor rebuilt around parallel agents, powered primarily by Claude and other frontier models.
-- Claude Code — Anthropic's terminal-native and IDE-integrated agentic coding tool for delegating complex development tasks.
-- Windsurf — AI coding IDE (formerly Codeium) focused on agentic flows and multi-file refactoring.
-- Google Antigravity — Google's Gemini 3 Pro-powered agentic development platform competing with Cursor.
+Every Fabric Compute and Data stencil — and every parent — now has at least one dedicated threat:
 
-**Specialized Platforms**
+| Stencil | Threats  |
+|---|---|
+| **Parents** | |
+| Fabric Root | 4 |
+| Fabric Compute | 3 |
+| Fabric Data | 3 |
+| Fabric Tenant | 4 |
+| Fabric Workspace | 8 |
+| Fabric Boundary | 3 |
+| **Compute** | |
+| Data Agent | 4 |
+| Data Engineering | 4 |
+| Data Factory | 4 |
+| Fabric IQ | 2 |
+| Mirroring | 2 |
+| Power BI | 4 |
+| Realtime Hub | 3 |
+| Activator | 4 |
+| **Data** | |
+| KQL Database | 5 |
+| Cosmos DB | 1 |
+| Eventhouse | 6 |
+| Lakehouse | 12 |
+| OneLake | 12 |
+| Fabric SQL DB | 3 |
+| Warehouse | 8 |
+| Direct Lake | 4 |
 
-- Hugging Face — The leading open-source hub for hosting, sharing, and deploying ML models, datasets, and Spaces.
-- Synthesia — AI video generation platform creating realistic human avatar videos from text scripts.
-- Midjourney — Premium AI image generation platform known for high-quality artistic and photorealistic imagery.
-- ElevenLabs — Leading AI voice synthesis and text-to-speech platform with realistic voice cloning.
+## New threats by theme
 
-## Release Notes ##
-**Release 7 (2025-08-04)**
-This is the first version of the new Microsoft Template (MicrosoftTemplate.v1.tb7). This includes the last Azure template version 7 (AzureTemplate.v7.tb7) with the following stencil additions:
+### Spoofing — newly covered
 
-**Microsoft Entra**
-- Microsoft Entra ID
-- Microsoft Entra ID Governance
+**TH275 — Power BI embed token impersonation** *(S / High)*
+Embed tokens issued for Fabric Power BI artifacts represent the embedding application's broader scope; leakage through client-side script, browser storage, or logs lets an adversary impersonate that scope.
 
-**Microsoft Security Boundary**
-- Microsoft Entra Boundary
-- Microsoft Fabric Boundary
+**TH276 — Data Agent SPN vs user identity** *(S / High)*
+Fabric Data Agents do not support service principal authentication. Designs that assume SPN can be used may fall back to cached or shared user identities, breaking attribution and potentially executing under a higher-privilege user.
 
-**Microsoft Fabric**
-- Microsoft Fabric Tenant
-- Microsoft Fabric Workspace
+**TH277 — Scheduled-run vs interactive-edit identity divergence** *(S / High)*
+Pipelines, notebooks, and refreshes execute under a configured run identity, not the editing user's identity. Edit-rights compromise is therefore a path to invoking work under a broader run identity.
 
-**Microsoft Fabric Compute**
-- Microsoft Fabric Data Agent
-- Microsoft Fabric Data Factory
-- Microsoft Fabric Mirroring
-- Microsoft Fabric Power BI
-- Microsoft Fabric Realtime Hub
+### OneLake Security limits and incompatibility
 
-**Microsoft Fabric Data**
-- KQL Database
-- Microsoft Fabric Cosmos DB
-- Microsoft Fabric Eventhouse
-- Microsoft Fabric Lakehouse
-- Microsoft Fabric OneLake
-- Microsoft Fabric SQL Database
-- Microsoft Fabric Warehouse
-- Power BI Direct Lake
+**TH278 — Role-count and membership limits force role widening** *(I / Medium)*
+Hard caps of 250 roles per lakehouse, 500 members per role, and 500 permissions per role can drive consolidation that silently regresses least-privilege.
 
-**Legacy Azure templates have been moved to the Archive folder**
+**TH279 — Mutually exclusive controls** *(I / High)*
+OneLake Security cannot coexist with private link or Purview Data Share. Designs requiring all three must partition workspaces or accept reduced control on at least one axis.
 
-**Release 6 (2025-08-01)**
+### Engine-specific behaviors
 
-Added the following Stencils
+**TH280 — Direct Lake silent fallback to DirectQuery** *(I / High)*
+Unsupported features cause Direct Lake reports to fall back to DirectQuery, which evaluates security through the SQL endpoint layer rather than OneLake Security, potentially producing different effective access.
 
-**Azure Asset**
-- Microsoft Entra ID
+### Credential and supply chain
 
-**Azure Service**
-- Microsoft Sentinel
+**TH281 — Mirroring source credentials become workspace-resident** *(I / High)*
+Source-system credentials stored to enable mirroring grant access to the source database, not just the mirror.
 
-**AWS Data**
-- AWS Aurora
-- AWS DocumentDB
-- AWS DynamoDB
-- AWS Neptune
-- AWS RDS
-- AWS Redshift
-- AWS Timestream
-- MariaDB in AWS
-- MySQL in AWS
-- Oracle in AWS
-- PostgreSQL in AWS
-- Snowflake in AWS
-- SQL Server in AWS
-- SQL Server VM in AWS
+**TH282 — Spark library / environment supply chain** *(T / High)*
+Custom JARs, wheel packages, and environments attached to a workspace run in every notebook and Spark job.
 
-**AWS Boundary**
-- Amazon Cloud Boundary
-- AWS Region
-- AWS Security Group
-- AWS VPC
+### Activator and event paths
 
-**Interactor**
-- Administrator
-- Attacker
-- External Service
-- System Process
-- User
+**TH283 — Activator webhook as exfiltration channel** *(I / High)*
+Outbound webhook calls from Activator rules can become covert exfil paths from privileged event sources.
 
-**Cloud SaaS Services**
-- Box
-- Dropbox
-- Google Drive
-- Microsoft 365
-- OneDrive
-- Power BI Platform
-- Power Automate
-- SharePoint
-- X Twitter
+**TH284 — KQL silent schema-drift handling** *(T / Medium)*
+Default ingestion mappings drop unmapped fields and coerce type mismatches silently, hiding malicious or anomalous payloads from detection rules expecting specific fields.
 
-**Sample Release (2022-07-17)**
+### Direct OneLake access path
 
-**Added Sample** - [Azure Data & Analytics Platform](https://github.com/AzureArchitecture/threat-model-templates/tree/master/Samples) 
+**TH285 — Files area reachable via ABFS bypasses Tables review** *(I / High)*
+The OneLake ABFS path exposes the Files area at item-level read; sensitive data placed there has no row, column, or schema-level controls.
 
-**Pre-Release 5 (2022-03-30)**
+### Tenant / cross-cutting governance
 
-**New Stencils**
-- Anomaly detectors
-- Azure Purview accounts
-- Bot Services
-- Cognitive search
-- Cognitive Services
-- Computer vision
-- Content moderators
-- Custom vision
-- Face APIs
-- Firewall Policies
-- Form recognizers
-- Front Door and CDN profiles
-- Immersive readers
-- Language understanding
-- Language
-- Metrics advisors
-- Network interfaces
-- Personalizers
-- Public IP Prefixes
-- QnA makers
-- Speech services
-- Splunk
-- Translators
-- Video Analyzers
-- Web Application Firewall policies
+**TH286 — Copilot / generative AI features cross the workspace boundary** *(I / High)*
+Workspace data and metadata sent to model endpoints (potentially in a different geography) is a disclosure event regardless of contractual terms.
 
-**New Threat Properties**
-1. FINRA - Does this comply with FINRA, a standard set for not-for-profit organizations authorized by Congress that regulates and enforces the enhancement of investor safeguards and market integrity?
-1. FISMA -  Does this comply with FISMA, the US legislation that defines a comprehensive framework to protect government information, operations and assets within federal agencies, against threats?
-1. GAAP - Does this comply with GAAP, a collection of commonly-followed accounting rules and standards for financial reporting?
-1. HIPPA - Does this comply with HIPAA, the US legislation that sets standards for protecting the confidentiality and security of individually identifiable health information?
-1. ISAE 3402 - Does this comply with ISAE 3402, the global standard providing assurance that a service organization has appropriate controls in place?
-1. ISO 27001 - Is this ISO 27001 certified, a certificate given to companies upholding internationally recognized guidelines and general principles for initiating, implementing, maintaining, and improving information security management within an organization?
-1. ITAR - Does this comply with ITAR, regulations controlling the export and import of defense-related articles and services found on the US Munitions List?
-1. SOC 1 - Does this comply with SOC 1, reporting on controls at a service organization which are relevant to user entities' internal control over financial reporting?
-1. SOC 2 - Does this comply with SOC 2, reporting on non-financial processing based on one or more of the Trust service criteria on security, privacy, availability, confidentiality, and processing integrity?
-1. SOC 3 -  Does this comply with SOC 3, reporting based on the Trust service criteria, that may be distributed freely and only contain management's assertion that they have met the requirements of the chosen criteria?
-1. SOX - Does this comply with SOX, US legislation aimed at protecting shareholders and the general public from accounting errors and frauds, as well as improving the accuracy of corporate disclosures?
-1. SP 800-53 -  Does this comply with SP80053, recommended security controls for federal information systems and organizations?
-1. SSAE 16 - Does this comply with the SSAE 16 standard for auditing a service organization's internal compliance controls and reporting processes?
-1. PCI DSS version - The version of the PCI-DSS protocol supported by this app.
-1. ISO 27018 - Does this comply with ISO 27018, which establishes commonly accepted controls and guidelines for processing and protecting Personally Identifiable Information (PII) in a public cloud computing environment?
-1. GLBA - Does this app comply with the Gramm-Leach-Bliley Act (GLBA), which requires financial institutions to establish standards for protecting the security and confidentiality of customers' personal information?
-1. FedRAMP level - The level of the FedRAMP-compliant solution provided.
-1. CSA STAR level - The level of CSA STAR program at which this is certified.
-1. Privacy Shield - Does this comply with the EU-US Privacy Shield Framework, which imposes stronger obligations on US companies to protect Europeans' personal data?
-1. ISO 27017 - Does this comply with ISO 27017, which establishes commonly accepted controls and guidelines for processing and protecting user information in a public cloud-computing environment?
-1. COBIT - Does this comply with COBIT, which sets best practices for the governance and control of information systems and technology, and aligns IT with business principles?
-1. COPPA - Does this comply with COPPA, which defines requirements on website and online services operators that provide content to children under 13 years of age?
-1. FERPA - Does this comply with FERPA, a federal law that protects the privacy of student education records?
-1. GAPP -  Does this comply with GAPP, a collection of commonly-followed rules that address privacy risks in an organization?
-1. HITRUST CSF - Does this comply with HITRUST CSF, a set of controls that harmonizes the requirements of information security regulations and standards?
-1. Jericho Forum Commandments - Does this follow Jericho Forum Commandments, a set if principles to be observed when architecting systems for secure operation in de-perimeterized environments?
-1. ISO 27002 -  Does this app comply with ISO 27002, which establishes common guidelines for organizational information security standards and information security management practices?
-1. FFIEC - Does this comply with the Federal Financial Institutions Examination Council’s guidance on the risk management controls necessary to authenticate services in an Internet banking environment?
-1. Data ownership -  Does this app fully preserve the user's ownership of uploaded data?
-1. DMCA - Does this app comply with the Digital Millennium Copyright Act (DMCA), which criminalizes any attempt to unlawfully access copyrighted material?
-1. Data Retention Policy - What is the app’s policy for user data retention after account termination?
-1. GDPR - What is the app’s policy for user data retention after account termination?
+**TH287 — Compute-vs-data identity attribution at the trust boundary** *(R / Medium)*
+Shared run identities across compute and data layers obscure which compute artifact drove a given data access.
+
+**TH288 — Contributor role enables peer/self elevation through item ownership** *(E / Medium)*
+Contributors who create items become item owners with the ability to grant ReadAll and Reshare independently of workspace-admin oversight.
+
+**TH289 — Domain / Promoted-Certified endorsement widens discoverability beyond intended audience** *(I / Medium)*
+Endorsement surfaces items in catalog and recommendation experiences across the tenant; if applied before access controls match the wider audience, users discover items they were not intended to see.
 
 
 
-**Release 4 (2019-12-28)**
-
-**New Stencils**
-- Azure Storage Explorer
-- Azure Open Datasets
-- Azure SQL Managed Instance
-- Azure Synapse
-- Azure SQL Database Edge
-- Azure Data Share
-- Azure Cloud Shell
-- Azure Alerts
-- Azure Firewall Manager
-- Azure DevOps Pipelines
-- Azure DevOps Boards
-- Azure DevOps Artifacts
-- Azure DevOps Repos
-- Azure Sentinal
-
-**New Threat Types**
-
-**Threat Properties**
