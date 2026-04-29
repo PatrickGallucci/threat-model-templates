@@ -4,6 +4,56 @@ https://www.microsoft.com/en-us/securityengineering/sdl/threatmodeling
 
 ![](https://i.imgur.com/M6o7wJT.png)
 
+## Release Notes 
+**Release 8 (2026-04-29)**
+This version includes the following stencil additions:
+
+**Frontier Model Platforms (LLM Providers)**
+
+- Claude (Anthropic) — Frontier AI assistant currently led by Claude Opus 4.7, known for long-horizon agentic work, coding, and powering tools like Cursor, Windsurf, and Claude Code.
+- ChatGPT (OpenAI) — The market-leading AI assistant powered by GPT-5.4, offering chat, reasoning, image generation (DALL-E), and the Assistants/Agents SDK.
+- Gemini (Google) — Google's flagship multimodal AI featuring Gemini 3.1 Pro with a 1M token context window and the tightest Google Workspace integration on the market.
+- Grok (xAI) — Elon Musk's AI assistant integrated into X, focused on real-time search, advanced reasoning ("Think" and "Big Brain" modes), and coding via Grok Studio.
+- DeepSeek — Open-source frontier model from China offering competitive performance at significantly lower cost, popular for self-hosted enterprise deployments.
+- Perplexity — Verification-first AI search platform with real-time citations, now wrapped in the Comet browser with multi-agent workflow capabilities.
+
+**Enterprise / Cloud AI Platforms**
+
+- AWS Bedrock — Amazon's managed service providing API access to multiple foundation models (Claude, Llama, Titan, etc.) with enterprise-grade governance.
+- Google Vertex AI — Google Cloud's end-to-end ML and generative AI platform for training, tuning, and deploying models including Gemini.
+- Databricks (Mosaic AI) — Data intelligence platform unifying data lakes, warehouses, and AI workloads with Lakehouse architecture for enterprise ML and GenAI.
+- IBM watsonx — IBM's enterprise AI and data platform focused on governance, foundation model customization, and regulated-industry deployments.
+- DataRobot — Enterprise AI lifecycle platform for predictive ML, generative AI, and MLOps with strong governance tooling.
+
+**Microsoft Copilot Ecosystem (relevant to your stack)**
+
+- Microsoft 365 Copilot — AI assistant embedded across Word, Excel, PowerPoint, Outlook, and Teams, with the Wave 3 "E7 Frontier Suite" for enterprise productivity.
+- GitHub Copilot — AI pair programmer for code completion, chat, and agent-mode coding tasks across IDEs and the GitHub platform.
+- Copilot Studio — Low-code platform for building custom AI agents and copilots that integrate with Dynamics 365, Power Platform, and Microsoft 365.
+- Microsoft Fabric Data Agents — Native Fabric capability enabling natural language Q&A over lakehouses, warehouses, semantic models, and KQL databases.
+
+**AI Agent & Orchestration Platforms**
+
+- LangChain / LangGraph — Open-source framework for building stateful, multi-actor LLM applications and agent workflows with strong developer adoption.
+- CrewAI — Multi-agent orchestration framework for coordinating role-based AI agents to complete complex collaborative tasks.
+- AutoGen (Microsoft) — Microsoft Research's open-source framework for building conversational multi-agent systems.
+- n8n — Self-hostable workflow automation platform with a powerful AI Agent node, ideal for data-sovereignty-sensitive integrations.
+- Lindy — No-code AI agent platform for business automation, lead routing, and CRM workflows.
+
+**Developer & Coding Platforms**
+
+- Cursor — AI-native code editor rebuilt around parallel agents, powered primarily by Claude and other frontier models.
+- Claude Code — Anthropic's terminal-native and IDE-integrated agentic coding tool for delegating complex development tasks.
+- Windsurf — AI coding IDE (formerly Codeium) focused on agentic flows and multi-file refactoring.
+- Google Antigravity — Google's Gemini 3 Pro-powered agentic development platform competing with Cursor.
+
+**Specialized Platforms**
+
+- Hugging Face — The leading open-source hub for hosting, sharing, and deploying ML models, datasets, and Spaces.
+- Synthesia — AI video generation platform creating realistic human avatar videos from text scripts.
+- Midjourney — Premium AI image generation platform known for high-quality artistic and photorealistic imagery.
+- ElevenLabs — Leading AI voice synthesis and text-to-speech platform with realistic voice cloning.
+
 ## Release Notes ##
 **Release 7 (2025-08-04)**
 This is the first version of the new Microsoft Template (MicrosoftTemplate.v1.tb7). This includes the last Azure template version 7 (AzureTemplate.v7.tb7) with the following stencil additions:
