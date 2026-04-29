@@ -25,12 +25,6 @@ This version includes the following stencil additions:
 - IBM watsonx — IBM's enterprise AI and data platform focused on governance, foundation model customization, and regulated-industry deployments.
 - DataRobot — Enterprise AI lifecycle platform for predictive ML, generative AI, and MLOps with strong governance tooling.
 
-**Microsoft Copilot Ecosystem (relevant to your stack)**
-
-- Microsoft 365 Copilot — AI assistant embedded across Word, Excel, PowerPoint, Outlook, and Teams, with the Wave 3 "E7 Frontier Suite" for enterprise productivity.
-- GitHub Copilot — AI pair programmer for code completion, chat, and agent-mode coding tasks across IDEs and the GitHub platform.
-- Copilot Studio — Low-code platform for building custom AI agents and copilots that integrate with Dynamics 365, Power Platform, and Microsoft 365.
-- Microsoft Fabric Data Agents — Native Fabric capability enabling natural language Q&A over lakehouses, warehouses, semantic models, and KQL databases.
 
 **AI Agent & Orchestration Platforms**
 
