@@ -5,171 +5,150 @@ https://www.microsoft.com/en-us/securityengineering/sdl/threatmodeling
 ![](https://i.imgur.com/M6o7wJT.png)
 
 ## Release Notes 
-**Release 10 (2026-05-04)**
+**Release 11 (2026-05-04)**
 ## What this update adds
 
 ## STRIDE+A distribution
 
 | Category | Count | Threats |
 |---|---|---|
-| S — Spoofing | 2 | TH293, TH329 |
-| T — Tampering | 8 | TH291, TH297, TH301, TH302, TH303, TH312, TH316, TH318 |
-| R — Repudiation | 1 | TH326 |
-| I — Information Disclosure | 20 | TH290, TH295, TH296, TH298, TH300, TH304, TH305, TH306, TH307, TH309, TH310, TH311, TH313, TH314, TH315, TH319, TH321, TH322, TH323, TH325 |
-| D — Denial of Service | 2 | TH327, TH328 |
-| E — Elevation of Privilege | 7 | TH292, TH294, TH299, TH308, TH317, TH320, TH324 |
-| A — Abuse | 0 | (no Azure-platform-specific abuse pattern distinct from generic LLM/AI abuse already in TH219, TH242) |
+| S — Spoofing | 1 | TH381 |
+| T — Tampering | 5 | TH364, TH366, TH368, TH370, TH375 |
+| R — Repudiation | 1 | TH379 |
+| I — Information Disclosure | 17 | TH356, TH357, TH358, TH360, TH361, TH362, TH363, TH365, TH367, TH369, TH371, TH373, TH374, TH376, TH377, TH378, TH380 |
+| D — Denial of Service | 1 | TH382 |
+| E — Elevation of Privilege | 2 | TH359, TH372 |
+| A — Abuse | 0 | (no SaaS-distinct abuse pattern beyond LLM/AI abuse already in TH219, TH242) |
 
-The I-heavy distribution accurately reflects the dominant Azure threat surface: most platform-level risk concentrates in misconfigured access controls, over-broad RBAC scopes, and key/secret exposure — categories that map to Information Disclosure.
+The I-heavy distribution accurately reflects the SaaS threat surface: most platform-level risk concentrates in oversharing, federation gaps, and content exposure through legitimate sharing features used incorrectly.
+
+## Stencil coverage after this round
+
+Every SaaS stencil now has at least 2 dedicated threats from this round:
+
+| Stencil | New threats targeting it (this round) |
+|---|---|
+| GE.CS (parent) | TH356, TH379, TH380 |
+| Adobe | TH356, TH357, TH358, TH359, TH374, TH375, TH379, TH380, TH382 |
+| ADP | TH356, TH358, TH359, TH367, TH379, TH380, TH382 |
+| Aero | TH356, TH358, TH359, TH360, TH361, TH362, TH379, TH380, TH381 |
+| Box Storage | TH356, TH357, TH358, TH359, TH361, TH362, TH376, TH379, TH380, TH382 |
+| Dynamics CRM | TH358, TH359, TH372, TH379, TH380, TH382 |
+| Dynamics CRM Portal | TH372, TH373 |
+| Expensify | TH356, TH358, TH359, TH367, TH368, TH379, TH380, TH382 |
+| Jira | TH356, TH357, TH358, TH359, TH360, TH361, TH362, TH379, TH380, TH381, TH382 |
+| Microsoft 365 | TH356, TH357, TH358, TH359, TH361, TH362, TH379, TH380, TH381, TH382 |
+| Monday | TH356, TH357, TH358, TH359, TH360, TH361, TH362, TH379, TH380, TH381, TH382 |
+| Notion | TH356, TH357, TH358, TH359, TH360, TH361, TH362, TH379, TH380, TH381, TH382 |
+| Postmark | TH356, TH358, TH359, TH369, TH370, TH379, TH380, TH382 |
+| Power Automate | TH356, TH358, TH359, TH378, TH379, TH380, TH382 |
+| Power BI Platform | TH356, TH358, TH359, TH377, TH379, TH380 |
+| Salesforce | TH356, TH357, TH358, TH359, TH371, TH372, TH379, TH380, TH381, TH382 |
+| Trello | TH356, TH357, TH358, TH359, TH360, TH361, TH362, TH379, TH380, TH381, TH382 |
+| Slack | TH356, TH357, TH358, TH359, TH361, TH363, TH364, TH379, TH380, TH381, TH382 |
+| Zoom | TH356, TH357, TH358, TH359, TH361, TH365, TH366, TH379, TH380, TH381, TH382 |
+| Workday | TH356, TH358, TH359, TH367, TH379, TH380, TH382 |
 
 ## Threats grouped by theme
 
-### Identity, Secrets, Key Management
+### Cross-cutting SaaS Governance
 
-**TH290 — Over-broad Key Vault access policies / RBAC** *(I / High)*
-A single principal granted Key Vault Administrator or broad Get/List can read every secret. Co-locating multi-application secrets concentrates blast radius.
+**TH356 — SaaS not federated to corporate IdP** *(I / High)*
+Local accounts persist after IdP deactivation; SCIM provisioning is the right answer.
 
-**TH291 — Key Vault irreversible destruction** *(T / High)*
-Without soft-delete and purge protection, secrets and keys can be permanently destroyed; encrypted data becomes unrecoverable.
+**TH357 — SaaS marketplace third-party integrations** *(I / High)*
+End-user OAuth grants survive offboarding and accumulate as standing access for vendors of unknown trust.
 
-**TH292 — User-assigned managed identity sprawl** *(E / High)*
-A user-assigned MI attached to many resources concentrates privilege; compromise of any one resource yields the identity's full role set.
+**TH358 — SaaS audit logs not exported to central SIEM** *(I / Medium)*
+Each SaaS retains logs locally with limited retention; cross-SaaS investigation requires central correlation.
 
-**TH293 — Legacy authentication bypasses MFA / Conditional Access** *(S / High)*
-Basic auth, IMAP/POP/SMTP AUTH, older MAPI bypass modern auth controls — stolen-password access works without MFA challenge.
+**TH359 — SaaS admin role concentration** *(E / High)*
+Static admin roles without PIM/JIT controls concentrate tenant-wide privilege.
 
-### Compute Platforms
+**TH379 — Vendor audit retention windows** *(R / Medium)*
+Retention may not survive the timeline of an investigation; export to tenant-controlled archive is the answer.
 
-**TH294 — AKS cluster-wide RBAC bindings** *(E / High)*
-ClusterRoleBindings to cluster-admin/edit/admin grant exec-into-pod, secret-read, and ServiceAccount impersonation across namespaces.
+**TH380 — SaaS data residency and subprocessor lists** *(I / High)*
+Vendor region selection and subprocessor changes can move data across regulatory boundaries the tenant did not authorize.
 
-**TH295 — AKS image pulls from untrusted registries / mutable tags** *(I / High)*
-Without admission control or registry allowlisting, AKS pulls any image; moving tags swap behavior silently.
+### Work Management / Productivity (Jira, Monday, Trello, Notion, Aero)
 
-**TH296 — App Service settings / connection strings exposed via SCM** *(I / High)*
-Configuration values and connection strings are readable to any site Contributor and exposed through Kudu environment.
+**TH360 — Public-link sharing** *(I / High)*
+'Publish to web' / 'anyone with link' features enable end-user oversharing of boards, pages, tickets.
 
-**TH297 — Functions HTTP trigger with anonymous auth or weak keys** *(T / High)*
-Anonymous HTTP triggers are publicly invokable; function/host keys are long-lived shared secrets.
+**TH361 — Secrets pasted into tickets/cards/pages** *(I / Medium)*
+Credentials, tokens, customer PII pasted for collaboration persist in revision history and search index.
 
-**TH298 — Service Fabric shared admin certificate** *(I / Medium)*
-A shared admin certificate masks per-user attribution and creates a single point of compromise.
+**TH362 — External guest workspace visibility** *(I / Medium)*
+Guests typically see more than the inviter intended; cross-references and search surface unrelated workspace content.
 
-**TH299 — Batch pool job submission as code execution** *(E / High)*
-Anyone with submit rights runs arbitrary code with the pool's identity and network reach.
+### Team Communication (Slack, Zoom)
 
-### Integration / API / Messaging
+**TH363 — Slack indefinite message retention** *(I / Medium)*
+Default retention preserves years of channels and DMs; a workspace breach exfiltrates accumulated content.
 
-**TH300 — APIM subscription keys as shared secrets** *(I / High)*
-Long-lived keys, no per-caller attribution; if embedded in client code or leaked, anyone with the key calls the APIs.
+**TH364 — Slack webhook URL leakage** *(T / High)*
+Webhook URLs are bearer credentials; leakage enables internal phishing via authentic-looking automation messages.
 
-**TH301 — APIM policy tampering with tenant-wide effect** *(T / High)*
-Policy edits affect every consumer of the APIs, including back-end credential injection and rate-limit removal.
+**TH365 — Zoom cloud recording exposure** *(I / High)*
+Default share settings + transcripts + chat logs make sensitive meetings reachable beyond original participants.
 
-**TH302 — Logic App workflow tampering / trigger URL replay** *(T / High)*
-HTTP-triggered Logic Apps expose callback URLs containing SAS-style signatures; leakage = invocation rights.
+**TH366 — Zoom meeting hijack via leaked IDs** *(T / Medium)*
+Meetings without passcodes/waiting rooms enable Zoombombing and eavesdropping on confidential discussions.
 
-**TH303 — Event Grid subscription endpoint hijacking** *(T / Medium)*
-Subscription destination updates may not re-validate webhook ownership, allowing redirection to attacker-controlled URLs.
+### HR / Finance / Payroll (Workday, ADP, Expensify)
 
-**TH304 — Service Bus broad SAS / namespace-scoped access** *(I / High)*
-Namespace-level SAS with Manage rights grants access to every queue and topic in the namespace.
+**TH367 — HR/payroll PII data classification** *(I / High)*
+Compensation, tax IDs, banking, dependent info, medical — uniformly highest sensitivity, warrants stricter baseline controls.
 
-**TH305 — Stream Analytics output fan-out across trust domains** *(I / High)*
-Adding an output sink begins continuous data export with no per-record consent.
+**TH368 — Expense fraud through receipt manipulation** *(T / Medium)*
+OCR-edited amounts, synthetic receipts, category gaming — design-time controls on validation rules and approvals.
 
-### Data Services
+### Mail / Transactional API (Postmark)
 
-**TH306 — Cosmos DB master key exposure** *(I / High)*
-Master keys grant full account access; embedding them in clients exposes every database.
+**TH369 — Transactional-email API token leakage** *(I / High)*
+Leaked tokens enable SPF/DKIM/DMARC-passing phishing from verified organization domains.
 
-**TH307 — Storage anonymous container access** *(I / High)*
-Public-blob containers + public network access expose blobs to internet enumeration.
+**TH370 — Email template tampering** *(T / High)*
+Server-side templates modified to convert legitimate transactional flows (password reset, invoice) into phishing/malware delivery.
 
-**TH308 — SQL Managed Instance dual auth plane** *(E / High)*
-SQL-level admins are separate from Azure RBAC; lifecycle deprovisioning may not remove SQL access.
+### CRM (Salesforce, Dynamics CRM)
 
-**TH309 — Azure AI Search admin/query key exposure** *(I / High)*
-Admin keys = full management; query keys allow document enumeration without security trimming.
+**TH371 — Salesforce sharing model complexity** *(I / High)*
+OWD + role hierarchy + sharing rules + manual sharing + Apex sharing → effective access drift over time.
 
-**TH310 — Redis cache as derivative data store** *(I / Medium)*
-Cached values inherit only Redis-level auth, not source-system row/column filters.
+**TH372 — CRM integration users with broad permissions** *(E / High)*
+Shared System Administrator-equivalent service accounts spread across many integrations.
 
-**TH311 — ADLS Gen2 RBAC + POSIX ACL interaction** *(I / High)*
-Removing RBAC does not remove ACLs; access can persist after intended deprovisioning.
+**TH373 — Dynamics CRM Portal Entity Permissions** *(I / High)*
+Portal permissions are a separate model from internal CRM security; Global-scope grants can expose all rows of a table.
 
-**TH312 — Data Factory SHIR credential concentration** *(T / High)*
-Self-hosted integration runtime hosts cache credentials for every linked service it brokers.
+### Creative / Document (Adobe)
 
-**TH313 — Synapse / Databricks notebook results persistence** *(I / Medium)*
-Query results, history, and cluster logs persist outside source-system access controls.
+**TH374 — Creative Cloud Library oversharing** *(I / Medium)*
+Organization-scoped libraries expose unreleased designs and embedded customer data with retained metadata.
 
-**TH314 — Azure Backup restore as indirect read path** *(I / High)*
-Restore-to-alternative-location bypasses source-resource access controls.
+**TH375 — Adobe Sign workflow tampering** *(T / High)*
+Workflow-design rights enable swapping signers, changing document versions, or redirecting completion.
 
-### Operations / Observability
+### File Storage (Box)
 
-**TH315 — Log Analytics / Sentinel central data exposure** *(I / High)*
-Workspace reader rights expose tenant-wide telemetry, identity activity, and application data.
+**TH376 — Box anonymous link sharing** *(I / High)*
+'Anyone with link' default makes folders globally readable to anyone obtaining the URL.
 
-**TH316 — Automation runbook as privileged code execution** *(T / High)*
-Runbooks execute under Run As / managed identity, often with broad scope.
+### Power BI / Power Automate
 
-### DevOps
+**TH377 — Power BI Publish to Web** *(I / High)*
+Public URL + queryable underlying dataset = unauthenticated read of report content and dataset.
 
-**TH317 — Azure DevOps YAML pipeline supply chain** *(E / High)*
-Pipeline editors and PR submitters can run code under agent identity with attached secrets.
+**TH378 — Power Automate connector DLP gaps** *(I / High)*
+Without DLP policies, flows bridge business and consumer connectors and become exfil channels.
 
-**TH318 — Azure DevOps branch policy bypass** *(T / High)*
-Project administrators and bypass-granted service accounts can push directly to protected branches.
+### Cross-SaaS Identity and Reliability
 
-### Network Boundaries
+**TH381 — Display-name impersonation** *(S / Medium)*
+User-controllable display names enable internal social-engineering: 'CEO Name', 'IT Help Desk'.
 
-**TH319 — NSG over-permissive rules** *(I / Medium)*
-Any-any rules created in troubleshooting persist as lateral movement paths.
-
-**TH320 — Inherited RBAC at MG/Subscription scope** *(E / High)*
-Owner/Contributor at high scope concentrates privilege across every current and future resource.
-
-**TH321 — VNet peering / VPN / service endpoint reachability sprawl** *(I / High)*
-Network topology changes silently extend resource reachability across trust domains.
-
-**TH322 — Geo-replication residency violation** *(I / High)*
-Paired-region replication may breach residency requirements (GDPR, sectoral, sovereignty).
-
-### SaaS Integration
-
-**TH323 — Microsoft 365 oversharing through link defaults** *(I / High)*
-Anyone-with-link sharing can be enabled by users with no per-document approval.
-
-**TH324 — Power Automate citizen-developer flows** *(E / Medium)*
-End-user flows execute on company systems under user identities, bypassing IT change control.
-
-**TH325 — OAuth consent persistence beyond user lifecycle** *(I / High)*
-SaaS app consents persist after user offboarding unless explicitly revoked.
-
-### Cross-cutting
-
-**TH326 — Diagnostic settings disabled or fragmented** *(R / Medium)*
-Without enforced diagnostic settings to a central workspace, audit trails are incomplete.
-
-**TH327 — DDoS exposure without DDoS Protection Standard** *(D / Medium)*
-Public IPs with only basic protection are vulnerable to targeted volumetric and L7 attacks.
-
-**TH328 — Cost-based denial of service through metered consumption** *(D / High)*
-Functions, Logic Apps, Cosmos serverless, Cognitive Services billed per use; attacker load → budget exhaustion → outage.
-
-**TH329 — Power BI Embedded master user impersonation** *(S / Medium)*
-Master-user pattern collapses per-end-user attribution into a shared service identity.
-
-## Stencil coverage
-
-After this round, **every Azure stencil in the template has at least one dedicated threat** — Azure Services (47), Azure Data Services (35), Azure Boundaries (10), and Cloud SaaS (7).
-
-| Group | Stencils with ≥1 threat (before → after) |
-|---|---|
-| Azure Services | 12/47 → 47/47 |
-| Azure Data Services | 10/35 → 35/35 |
-| Azure Boundaries | 2/10 → 10/10 |
-| Cloud SaaS | 2/7 → 7/7 |
+**TH382 — Tenant API rate-limit exhaustion** *(D / Medium)*
+One runaway integration starves all other consumers of the same tenant.
 
