@@ -2,11 +2,14 @@
 # Microsoft Template - Microsoft Security Threat Model Stencil #
 https://www.microsoft.com/en-us/securityengineering/sdl/threatmodeling
 
+
 ![](https://i.imgur.com/M6o7wJT.png)
 
 ## Release Notes 
 **Release 11 (2026-05-04)**
 ## What this update adds
+- [Microsoft Template Threat Catalog](ThreatCatalog.md)
+- Added sample PowerShell script to create model from Azure Subscription [New-AzureThreatModel.ps1](/Scripts/New-AzureThreatModel.ps1)
 
 ## STRIDE+A distribution
 
